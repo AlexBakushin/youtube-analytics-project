@@ -23,33 +23,33 @@ class Channel:
         return channel
 
     def title(self):
-        '''
+        """
         Возвращает название
-        '''
+        """
         return Channel.info[1].get('items')[0].get('snippet').get('title')
 
     def video_count(self):
-        '''
+        """
         Возвращает количество видео на канале
-        '''
+        """
         return Channel.info[1].get('items')[0].get('statistics').get('videoCount')
 
     def url(self):
-        '''
+        """
         Возвращает полную ссылку на канал
-        '''
+        """
         return 'https://www.youtube.com/channel/' + Channel.info[1].get('items')[0].get('id')
 
     @classmethod
     def get_service(cls):
-        '''
+        """
         - класс-метод `get_service()`, возвращающий объект для работы с YouTube API
-        '''
-        return cls.youtube_object
+        """
+        return cls.info[0]
 
     def to_json(self, file_name):
-        '''
+        """
         - метод `to_json()`, сохраняющий в файл значения атрибутов экземпляра `Channel`
-        '''
+        """
         with open(file_name, 'w') as outfile:
             return json.dump(Channel.info[1], outfile)
