@@ -4,8 +4,6 @@ if __name__ == '__main__':
     # Создаем два экземпляра класса
     moscowpython = Channel('UC-OVMPlMA3-YCIeg4z5z23A')
     highload = Channel('UCwHL6WHUarjGfUM_586me8w')
-    moscowpython.print_info()
-    highload.print_info()
 
     # Используем различные магические методы
     print(moscowpython)  # 'MoscowPython (https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A)'
@@ -17,5 +15,3 @@ if __name__ == '__main__':
     print(moscowpython < highload)  # True
     print(moscowpython <= highload)  # True
     print(moscowpython == highload)  # False
-
-    highload.to_json('highload.json')
