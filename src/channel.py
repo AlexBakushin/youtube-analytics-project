@@ -21,22 +21,40 @@ class Channel:
         return f"{self.__name} ({Channel.url(self)})"
 
     def __add__(self, other):
-        return self.__sub_count + other.__sub_count
+        if type(other) == Channel:
+            return self.__sub_count + other.__sub_count
+        else:
+            raise TypeError
 
     def __sub__(self, other):
-        return self.__sub_count - other.__sub_count
+        if type(other) == Channel:
+            return self.__sub_count - other.__sub_count
+        else:
+            raise TypeError
 
     def __lt__(self, other):
-        return self.__sub_count < other.__sub_count
+        if type(other) == Channel:
+            return self.__sub_count < other.__sub_count
+        else:
+            raise TypeError
 
     def __le__(self, other):
-        return self.__sub_count <= other.__sub_count
+        if type(other) == Channel:
+            return self.__sub_count <= other.__sub_count
+        else:
+            raise TypeError
 
     def __gt__(self, other):
-        return self.__sub_count > other.__sub_count
+        if type(other) == Channel:
+            return self.__sub_count > other.__sub_count
+        else:
+            raise TypeError
 
     def __ge__(self, other):
-        return self.__sub_count >= other.__sub_count
+        if type(other) == Channel:
+            return self.__sub_count >= other.__sub_count
+        else:
+            raise TypeError
 
     def print_info(self):
         """Выводит в консоль информацию о канале."""
