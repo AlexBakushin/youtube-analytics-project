@@ -13,30 +13,30 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
         Channel.youtube_object.append(self)
+        self.__name = self.print_info().get('items')[0].get('snippet').get('title')
+        self.__video_count = self.print_info().get('items')[0].get('statistics').get('videoCount')
+        self.__sub_count = int(self.print_info().get('items')[0].get('statistics').get('subscriberCount'))
 
     def __str__(self):
-        return f"{Channel.title(self)} ({Channel.url(self)})"
+        return f"{self.__name} ({Channel.url(self)})"
 
     def __add__(self, other):
-        return self.sub_count() + other.sub_count()
+        return self.__sub_count + other.__sub_count
 
     def __sub__(self, other):
-        return self.sub_count() - other.sub_count()
+        return self.__sub_count - other.__sub_count
 
     def __lt__(self, other):
-        return self.sub_count() < other.sub_count()
+        return self.__sub_count < other.__sub_count
 
     def __le__(self, other):
-        return self.sub_count() <= other.sub_count()
+        return self.__sub_count <= other.__sub_count
 
     def __gt__(self, other):
-        return self.sub_count() > other.sub_count()
+        return self.__sub_count > other.__sub_count
 
     def __ge__(self, other):
-        return self.sub_count() >= other.sub_count()
-
-    def sub_count(self):
-        return int(self.print_info().get('items')[0].get('statistics').get('subscriberCount'))
+        return self.__sub_count >= other.__sub_count
 
     def print_info(self):
         """Выводит в консоль информацию о канале."""
@@ -50,19 +50,19 @@ class Channel:
         """
         Возвращает название
         """
-        return self.print_info().get('items')[0].get('snippet').get('title')
+        return self.__name
 
     def video_count(self):
         """
         Возвращает количество видео на канале
         """
-        return self.print_info().get('items')[0].get('statistics').get('videoCount')
+        return self.__video_count
 
     def url(self):
         """
         Возвращает полную ссылку на канал
         """
-        return 'https://www.youtube.com/channel/' + self.print_info().get('items')[0].get('id')
+        return 'https://www.youtube.com/channel/' + self.channel_id
 
     @classmethod
     def get_service(cls):
