@@ -17,7 +17,9 @@ class PlayList:
         video_response = массив информации о плэй-листе
         """
         self.playlist_id = playlist_id
-        # self.title =
+        youtube = self.get_service()
+        playlist = youtube.playlists().list(id=playlist_id, part='contentDetails,snippet').execute()
+        self.title = playlist['items'][0]['snippet']['title']
         self.url = 'https://www.youtube.com/playlist?list=' + self.playlist_id
         self.video_response = self.print_info()
 
@@ -27,13 +29,20 @@ class PlayList:
         """
         return self.title
 
+    @classmethod
+    def get_service(cls):
+        """
+        Класс-метод, возвращает объект для работы с YouTube API
+        """
+        api_key = os.environ.get('YT_API_KEY')
+        return build('youtube', 'v3', developerKey=api_key)
+
     def print_info(self):
         """
         Выводит всю информацию о плэй-листе в json-формате
         :return: массив информации о плэй-листе
             """
-        api_key = os.environ.get('YT_API_KEY')
-        youtube = build('youtube', 'v3', developerKey=api_key)
+        youtube = self.get_service()
         playlist_videos = youtube.playlistItems().list(playlistId=self.playlist_id, part='contentDetails',
                                                        maxResults=50, ).execute()
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
