@@ -7,20 +7,28 @@ class Video:
     """
     Класс для видео
     """
+
     def __init__(self, video_id):
         """
         Инициализация экземпляра по id видео
+        С проверкой существования id
         :param video_id: id видео
-        video_title = название видео
-        url = ссылка на видео
-        view_count = количество просмотров
-        like_count = количество лайков
+        video_title = название видео, если нет - None
+        url = ссылка на видео, если нет - None
+        view_count = количество просмотров, если нет - None
+        like_count = количество лайков, если нет - None
         """
         self.__video_id = video_id
-        self.__video_title: str = self.print_info()['items'][0]['snippet']['title']
-        self.__url: str = 'https://www.youtube.com/channel/' + self.__video_id
-        self.__view_count: int = self.print_info()['items'][0]['statistics']['viewCount']
-        self.__like_count: int = self.print_info()['items'][0]['statistics']['likeCount']
+        try:
+            self.__video_title: str = self.print_info()['items'][0]['snippet']['title']
+            self.__url: str = 'https://www.youtube.com/channel/' + self.__video_id
+            self.__view_count: int = self.print_info()['items'][0]['statistics']['viewCount']
+            self.__like_count: int = self.print_info()['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.title = None
+            self.url = None
+            self.view_count = None
+            self.like_count = None
 
     def __str__(self):
         """
@@ -39,7 +47,7 @@ class Video:
                                                id=self.__video_id).execute()
         return video_response
 
-    def video_title(self):
+    def title(self):
         """
         :return: название видео
         """
@@ -68,6 +76,7 @@ class PLVideo:
     """
     Класс для видео по плэй-листу
     """
+
     def __init__(self, video_id, playlist_id):
         """
         Инициализация экземпляра класса видео
