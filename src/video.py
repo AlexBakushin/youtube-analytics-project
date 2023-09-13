@@ -24,7 +24,7 @@ class Video:
             self.__url: str = 'https://www.youtube.com/channel/' + self.__video_id
             self.__view_count: int = self.print_info()['items'][0]['statistics']['viewCount']
             self.__like_count: int = self.print_info()['items'][0]['statistics']['likeCount']
-        except IndexError:
+        except (IndexError, ValueError, KeyError):
             self.title = None
             self.url = None
             self.view_count = None
